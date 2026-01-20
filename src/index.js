@@ -3,8 +3,50 @@ import './styles/main.css';
 import { Game } from './game/core/Game.js';
 import { AssetLoader } from './game/utils/AssetLoader.js';
 import { InputHandler } from './game/utils/InputHandler.js';
+import Character, { characters, alive } from './app.js';
+
+// Добавляем polyfill для старых браузеров
+import 'core-js/stable';
+// Убрать эту строку: import 'regenerator-runtime/runtime';
 
 console.log('🚀 Defender Game initializing...');
+console.log('Персонажи:', characters);
+console.log('Живые персонажи:', alive);
+
+// Демонстрация работы Babel
+const demoES6Features = () => {
+  // Let/const
+  let score = 0;
+  const MAX_SCORE = 999999;
+
+  // Arrow function
+  const addScore = (points) => {
+    score = Math.min(score + points, MAX_SCORE);
+    return score;
+  };
+
+  // Template literals
+  console.log(`Начальный счет: ${score}`);
+
+  // Destructuring
+  const gameConfig = { width: 800, height: 600, fps: 60 };
+  const { width, height } = gameConfig;
+
+  // Default parameters
+  const createEnemy = (type = 'basic', speed = 100) => ({
+    type,
+    speed,
+    health: 50
+  });
+
+  // Rest/Spread
+  const enemyTypes = ['basic', 'fast', 'tank'];
+  const allEnemies = [...enemyTypes, 'boss'];
+
+  return { addScore, width, height };
+};
+
+demoES6Features();
 
 // Инициализация при загрузке DOM
 document.addEventListener('DOMContentLoaded', async () => {

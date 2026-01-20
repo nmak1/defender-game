@@ -180,6 +180,6 @@ export class Game {
         console.log('💀 Game Over');
 
         // Показать экран Game Over
-        alert(\`GAME OVER\\nScore: \${this.state.score}\\nLevel: \${this.state.level}\`);
+        alert(`GAME OVER\nScore: ${this.state.score}\nLevel: ${this.state.level}`);
     }
 }

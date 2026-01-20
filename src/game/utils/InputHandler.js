@@ -18,11 +18,11 @@ export class InputHandler {
 
         // Кнопки мыши
         window.addEventListener('mousedown', (e) => {
-            this.keys[\`mouse\${e.button}\`] = true;
+            this.keys[`mouse${e.button}`] = true;
         });
 
         window.addEventListener('mouseup', (e) => {
-            this.keys[\`mouse\${e.button}\`] = false;
+            this.keys[`mouse${e.button}`] = false;
         });
 
         // Предотвращаем контекстное меню на правый клик
@@ -57,7 +57,7 @@ export class InputHandler {
     }
 
     isMousePressed(button = 0) {
-        return !!this.keys[\`mouse\${button}\`];
+        return !!this.keys[`mouse${button}`];
     }
 
     getMousePosition(canvas, event) {

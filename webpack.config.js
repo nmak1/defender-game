@@ -18,11 +18,20 @@ module.exports = {
     new HtmlWebpackPlugin({
       template: './public/index.html',
       title: 'Defender Game',
-      favicon: './public/favicon.ico',
     }),
   ],
   module: {
     rules: [
+      {
+        test: /\.js$/,
+        exclude: /node_modules/,
+        use: {
+          loader: 'babel-loader',
+          options: {
+            presets: ['@babel/preset-env']
+          }
+        }
+      },
       {
         test: /\.css$/i,
         use: ['style-loader', 'css-loader'],
@@ -30,32 +39,14 @@ module.exports = {
       {
         test: /\.(png|svg|jpg|jpeg|gif|webp)$/i,
         type: 'asset/resource',
-        generator: {
-          filename: 'assets/images/[name][ext]'
-        }
       },
       {
         test: /\.(mp3|wav|ogg)$/i,
         type: 'asset/resource',
-        generator: {
-          filename: 'assets/sounds/[name][ext]'
-        }
-      },
-      {
-        test: /\.(woff|woff2|eot|ttf|otf)$/i,
-        type: 'asset/resource',
-        generator: {
-          filename: 'assets/fonts/[name][ext]'
-        }
       },
     ],
   },
   resolve: {
     extensions: ['.js', '.json'],
-    alias: {
-      '@': path.resolve(__dirname, 'src'),
-      '@assets': path.resolve(__dirname, 'src/assets'),
-      '@styles': path.resolve(__dirname, 'src/styles'),
-    }
   },
 };
