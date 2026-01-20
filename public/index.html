@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Defender Game</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Orbitron:wght@400;700&display=swap">
+</head>
+<body>
+    <div id="particles"></div>
+
+    <div id="game-container">
+        <canvas id="gameCanvas"></canvas>
+
+        <div id="game-ui">
+            <div class="ui-panel">
+                SCORE: <span id="score" class="ui-value">000000</span>
+            </div>
+            <div class="ui-panel">
+                LIVES: <span id="lives" class="ui-value">❤️❤️❤️</span>
+            </div>
+            <div class="ui-panel">
+                LEVEL: <span id="level" class="ui-value">01</span>
+            </div>
+        </div>
+
+        <div id="start-screen">
+            <h1 id="game-title">DEFENDER</h1>
+            <div id="controls">
+                <p>🠉 🠈 🠊 🠋 - Move</p>
+                <p>SPACE - Shoot</p>
+                <p>P - Pause</p>
+                <p>R - Restart</p>
+            </div>
+            <button id="start-button">START MISSION</button>
+        </div>
+    </div>
+
+    <script>
+        // Простые частицы для фона
+        const particlesContainer = document.getElementById('particles');
+        for (let i = 0; i < 50; i++) {
+            const particle = document.createElement('div');
+            particle.style.position = 'absolute';
+            particle.style.width = Math.random() * 3 + 'px';
+            particle.style.height = particle.style.width;
+            particle.style.background = Math.random() > 0.5 ? '#00ffcc' : '#ff0066';
+            particle.style.borderRadius = '50%';
+            particle.style.left = Math.random() * 100 + '%';
+            particle.style.top = Math.random() * 100 + '%';
+            particle.style.opacity = Math.random() * 0.5 + 0.2;
+            particle.style.animation = `float ${Math.random() * 10 + 10}s linear infinite`;
+            particlesContainer.appendChild(particle);
+        }
+
+        // Добавляем стили для анимации частиц
+        const style = document.createElement('style');
+        style.textContent = `
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+            }
+
+            body {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                min-height: 100vh;
+                background: linear-gradient(135deg, #0a0e17 0%, #1a1f38 50%, #0a0e17 100%);
+                font-family: 'Orbitron', sans-serif;
+                overflow: hidden;
+                position: relative;
+            }
+
+            body::before {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background:
+                    radial-gradient(circle at 20% 30%, rgba(0, 255, 204, 0.1) 0%, transparent 50%),
+                    radial-gradient(circle at 80% 70%, rgba(255, 0, 102, 0.1) 0%, transparent 50%);
+                pointer-events: none;
+            }
+
+            #game-container {
+                position: relative;
+                border: 4px solid;
+                border-image: linear-gradient(45deg, #00ffcc, #ff0066, #00ccff) 1;
+                box-shadow:
+                    0 0 30px rgba(0, 255, 204, 0.3),
+                    0 0 60px rgba(255, 0, 102, 0.2),
+                    inset 0 0 20px rgba(0, 204, 255, 0.1);
+                overflow: hidden;
+            }
+
+            canvas {
+                display: block;
+                background: #000;
+            }
+
+            #game-ui {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                padding: 20px;
+                display: flex;
+                justify-content: space-between;
+                pointer-events: none;
+                z-index: 10;
+            }
+
+            .ui-panel {
+                background: rgba(0, 0, 0, 0.7);
+                padding: 15px 25px;
+                border: 2px solid #00ffcc;
+                border-radius: 8px;
+                color: #00ffcc;
+                font-family: 'Press Start 2P', cursive;
+                font-size: 14px;
+                text-shadow: 0 0 10px rgba(0, 255, 204, 0.8);
+                backdrop-filter: blur(5px);
+            }
+
+            .ui-value {
+                color: #ff0066;
+                margin-left: 10px;
+                text-shadow: 0 0 10px rgba(255, 0, 102, 0.8);
+            }
+
+            #start-screen {
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                text-align: center;
+                color: #00ffcc;
+                z-index: 20;
+                background: rgba(10, 14, 23, 0.9);
+                padding: 40px;
+                border: 3px solid #00ffcc;
+                border-radius: 10px;
+                backdrop-filter: blur(10px);
+            }
+
+            #game-title {
+                font-family: 'Press Start 2P', cursive;
+                font-size: 3em;
+                margin-bottom: 30px;
+                text-shadow:
+                    0 0 10px #00ffcc,
+                    0 0 20px #00ffcc,
+                    0 0 30px #00ffcc;
+                animation: pulse 2s infinite;
+            }
+
+            @keyframes pulse {
+                0%, 100% { opacity: 1; }
+                50% { opacity: 0.7; }
+            }
+
+            #controls {
+                margin: 20px 0;
+                color: #00ccff;
+                line-height: 1.8;
+            }
+
+            #start-button {
+                background: linear-gradient(45deg, #00ffcc, #00ccff);
+                border: none;
+                padding: 15px 40px;
+                font-family: 'Orbitron', sans-serif;
+                font-size: 18px;
+                font-weight: bold;
+                color: #0a0e17;
+                border-radius: 5px;
+                cursor: pointer;
+                margin-top: 20px;
+                transition: all 0.3s;
+                text-transform: uppercase;
+                letter-spacing: 2px;
+            }
+
+            #start-button:hover {
+                transform: scale(1.05);
+                box-shadow: 0 0 20px rgba(0, 255, 204, 0.5);
+            }
+
+            #particles {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                pointer-events: none;
+                z-index: 1;
+            }
+
+            @keyframes float {
+                0% { transform: translateY(0) translateX(0); }
+                25% { transform: translateY(-20px) translateX(20px); }
+                50% { transform: translateY(0) translateX(40px); }
+                75% { transform: translateY(20px) translateX(20px); }
+                100% { transform: translateY(0) translateX(0); }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>
