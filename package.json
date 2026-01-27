@@ -18,12 +18,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/yourusername/defender-game.git"
+    "url": "https://github.com/nmak1/defender-game.git"
   },
   "keywords": [
     "game"
   ],
-  "author": "Your Name",
+  "author": "nmak1",
   "license": "ISC",
   "devDependencies": {
     "@babel/cli": "^7.21.0",
@@ -55,11 +55,10 @@
     "collectCoverage": true,
     "collectCoverageFrom": [
       "src/health.js",
-      "src/sortCharacters.js",
-      "!src/**/*.test.js"
+      "src/sortCharacters.js"
     ],
     "coverageDirectory": "coverage",
-    "coverageReporters": ["text", "lcov", "html"],
+    "coverageReporters": ["text", "lcov"],
     "coverageThreshold": {
       "src/health.js": {
         "branches": 100,
@@ -75,10 +74,10 @@
       }
     },
     "testMatch": [
-      "**/__tests__/**/*.test.js"
+      "**/tests/**/*.test.js",
+      "**/?(*.)+(spec|test).js"
     ],
     "transform": {},
-    "moduleFileExtensions": ["js", "json"],
-    "verbose": true
+    "moduleFileExtensions": ["js", "json"]
   }
 }

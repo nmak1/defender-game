@@ -1,4 +1,4 @@
-export function healthIndicator(character) {
+function healthIndicator(character) {
   if (character.health > 50) {
     return 'healthy';
   }
@@ -7,3 +7,5 @@ export function healthIndicator(character) {
   }
   return 'critical';
 }
+
+module.exports = { healthIndicator };

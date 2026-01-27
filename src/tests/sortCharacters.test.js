@@ -1,4 +1,4 @@
-import { sortCharacters } from '../sortCharacters';
+const { sortCharacters } = require('../sortCharacters');
 
 describe('sortCharacters', () => {
   test('should sort characters by health in descending order', () => {
@@ -48,10 +48,7 @@ describe('sortCharacters', () => {
     const originalCopy = [...original];
     const sorted = sortCharacters(original);
 
-    // Проверяем, что оригинальный массив не изменился
     expect(original).toEqual(originalCopy);
-
-    // Проверяем, что отсортированный массив правильный
     expect(sorted).toEqual([
       { name: 'маг', health: 100 },
       { name: 'мечник', health: 10 },
