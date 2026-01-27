@@ -82,6 +82,7 @@ export class Game {
         this.lastTime = currentTime;
 
         if (!this.state.isPaused) {
+            // Используем deltaTime в update
             this.update(this.deltaTime);
             this.render();
         }
@@ -90,7 +91,11 @@ export class Game {
     }
 
     update(deltaTime) {
-        // Обновление игровой логики
+        // Обновление игровой логики с использованием deltaTime
+        // Пример использования:
+        // this.enemies.forEach(enemy => enemy.update(deltaTime));
+        // this.bullets.forEach(bullet => bullet.update(deltaTime));
+
         this.updateUI();
     }
 

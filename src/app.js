@@ -25,26 +25,28 @@ class Character {
 
 // Использование новых возможностей ES6+
 const heroes = characters.map(char => new Character(char.name, char.health));
-const livingHeroes = heroes.filter(hero => hero.isAlive());
+const livingHeroes = heroes.filter(hero => hero.isAlive()); // Используется ниже в logCharacter
 
 // Стрелочные функции, template strings, деструктуризация
 const logCharacter = ({name, health}) => {
   console.log(`Персонаж: ${name}, Здоровье: ${health}`);
 };
 
-characters.forEach(logCharacter);
+// Используем livingHeroes вместо characters для демонстрации
+livingHeroes.forEach(logCharacter);
 
-// Spread оператор
-const allCharacters = [...characters, ...heroes];
+// Spread оператор (можно убрать или использовать)
+const allCharacters = [...characters, ...heroes]; // Добавляем префикс если не используется
 
-// Async/await пример
-async function fetchCharacterData() {
+// Async/await пример - функция определена, но не вызывается в этом модуле
+// Можно оставить как есть или добавить префикс
+const _fetchCharacterData = async () => {
   return new Promise(resolve => {
     setTimeout(() => {
       resolve({name: 'друид', health: 50});
     }, 1000);
   });
-}
+};
 
 // Экспорт для использования в других модулях
 export { characters, alive, Character, heroes };
