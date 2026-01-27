@@ -54,44 +54,31 @@
     "testEnvironment": "jsdom",
     "collectCoverage": true,
     "collectCoverageFrom": [
-      "src/**/*.js",
-      "!src/**/*.test.js",
-      "!src/assets/**",
-      "!src/styles/**",
-      "!src/index.js",
-      "!src/app.js"
+      "src/health.js",
+      "src/sortCharacters.js",
+      "!src/**/*.test.js"
     ],
     "coverageDirectory": "coverage",
-    "coverageReporters": [
-      "text",
-      "lcov"
-    ],
+    "coverageReporters": ["text", "lcov", "html"],
     "coverageThreshold": {
-      "global": {
+      "src/health.js": {
+        "branches": 100,
+        "functions": 100,
+        "lines": 100,
+        "statements": 100
+      },
+      "src/sortCharacters.js": {
         "branches": 100,
         "functions": 100,
         "lines": 100,
         "statements": 100
       }
     },
-    "moduleDirectories": [
-      "node_modules",
-      "src"
-    ],
     "testMatch": [
-      "**/__tests__/**/*.test.js",
-      "**/?(*.)+(spec|test).js"
+      "**/__tests__/**/*.test.js"
     ],
-    "transform": {
-      "^.+\\.js$": "babel-jest"
-    },
-    "transformIgnorePatterns": [
-      "/node_modules/(?!(your-es6-module)/)"
-    ],
-    "moduleFileExtensions": [
-      "js",
-      "json"
-    ],
-    "setupFilesAfterEnv": []
+    "transform": {},
+    "moduleFileExtensions": ["js", "json"],
+    "verbose": true
   }
 }

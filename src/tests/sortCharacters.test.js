@@ -1,4 +1,4 @@
-   import { sortCharacters } from '../sortCharacters';
+import { sortCharacters } from '../sortCharacters';
 
 describe('sortCharacters', () => {
   test('should sort characters by health in descending order', () => {
@@ -15,13 +15,6 @@ describe('sortCharacters', () => {
       { name: 'лучник', health: 80 },
       { name: 'мечник', health: 10 },
     ]);
-
-    // Проверка, что toBe не работает для объектов
-    expect(sorted).not.toBe([
-      { name: 'маг', health: 100 },
-      { name: 'лучник', health: 80 },
-      { name: 'мечник', health: 10 },
-    ]);
   });
 
   test('should handle empty array', () => {
@@ -30,32 +23,38 @@ describe('sortCharacters', () => {
 
   test('should handle single character', () => {
     const characters = [{ name: 'маг', health: 100 }];
-    expect(sortCharacters(characters)).toEqual(characters);
+    expect(sortCharacters(characters)).toEqual([{ name: 'маг', health: 100 }]);
   });
 
-  test('should handle equal health values', () => {
+  test('should handle characters with equal health', () => {
     const characters = [
-      { name: 'мечник', health: 50 },
+      { name: 'воин', health: 50 },
       { name: 'маг', health: 50 },
       { name: 'лучник', health: 50 },
     ];
 
     const sorted = sortCharacters(characters);
+
     expect(sorted).toHaveLength(3);
-    expect(sorted[0].health).toBe(50);
-    expect(sorted[1].health).toBe(50);
-    expect(sorted[2].health).toBe(50);
+    expect(sorted.every(char => char.health === 50)).toBe(true);
   });
 
   test('should not mutate original array', () => {
-    const characters = [
+    const original = [
       { name: 'мечник', health: 10 },
       { name: 'маг', health: 100 },
     ];
 
-    const originalCharacters = [...characters];
-    sortCharacters(characters);
+    const originalCopy = [...original];
+    const sorted = sortCharacters(original);
 
-    expect(characters).toEqual(originalCharacters);
+    // Проверяем, что оригинальный массив не изменился
+    expect(original).toEqual(originalCopy);
+
+    // Проверяем, что отсортированный массив правильный
+    expect(sorted).toEqual([
+      { name: 'маг', health: 100 },
+      { name: 'мечник', health: 10 },
+    ]);
   });
 });
