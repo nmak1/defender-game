@@ -9,7 +9,6 @@ describe('getLevel', () => {
   });
 
   test('should return level for successful response', () => {
-    // Настраиваем мок
     fetchData.mockReturnValue({ status: 'ok', level: 5 });
 
     const result = getLevel(123);
