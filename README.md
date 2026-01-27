@@ -25,7 +25,7 @@
 
 ```bash
 # Клонирование репозитория
-git clone https://github.com/yourusername/defender-game.git
+git clone https://github.com/nmak1/defender-game.git
 cd defender-game
 
 # Установка зависимостей
@@ -36,3 +36,20 @@ npm start
 
 # Сборка для продакшена
 npm run build
+
+# Defender Game
+
+[![Tests](https://github.com/nmak1/defender-game/actions/workflows/test.yml/badge.svg)](https://github.com/YOUR_USERNAME/defender-game/actions/workflows/test.yml)
+[![codecov](https://codecov.io/gh/nmak1/defender-game/branch/main/graph/badge.svg)](https://codecov.io/gh/YOUR_USERNAME/defender-game)
+
+## Unit Testing Project
+
+Проект демонстрирует 100% покрытие кода тестами с использованием Jest.
+
+### Задачи:
+1. **Чистые функции** - функция индикации здоровья персонажа
+2. **Matchers** - сортировка персонажей по уровню здоровья
+
+### Запуск тестов:
+```bash
+npm test

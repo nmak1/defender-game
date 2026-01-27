@@ -4,11 +4,14 @@
       "@babel/preset-env",
       {
         "useBuiltIns": "entry",
-        "corejs": "3.29",
+        "corejs": "3.29.1",
         "targets": {
-          "browsers": ["last 2 versions", "not dead", "not ie <= 11"]
+          "node": "current"
         }
       }
     ]
+  ],
+  "plugins": [
+    "@babel/plugin-transform-modules-commonjs"
   ]
 }
