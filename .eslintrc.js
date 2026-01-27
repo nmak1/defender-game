@@ -6,22 +6,33 @@ module.exports = {
     'jest/globals': true
   },
   extends: [
-    'eslint:recommended',
-    'plugin:react/recommended'
+    'eslint:recommended'
   ],
   parserOptions: {
     ecmaVersion: 'latest',
     sourceType: 'module'
   },
-  plugins: ['react', 'jest'],
+  plugins: ['jest'],
   rules: {
     'no-console': 'off',
-    'react/react-in-jsx-scope': 'off',
-    'react/prop-types': 'off'
+    'no-unused-vars': ['error', {
+      'argsIgnorePattern': '^_',
+      'varsIgnorePattern': '^_',
+      'caughtErrorsIgnorePattern': '^_',
+      'ignoreRestSiblings': true
+    }],
+    'jest/no-disabled-tests': 'warn',
+    'jest/no-focused-tests': 'error',
+    'jest/no-identical-title': 'error',
+    'jest/valid-expect': 'error'
   },
-  settings: {
-    react: {
-      version: 'detect'
-    }
-  }
+  ignorePatterns: [
+    'dist/',
+    'node_modules/',
+    'coverage/',
+    '*.config.js',
+    'webpack.config.js',
+    'babel.config.js',
+    'jest.config.js'
+  ]
 };

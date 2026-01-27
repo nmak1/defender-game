@@ -91,12 +91,8 @@ export class Game {
     }
 
     update(deltaTime) {
-        // Обновление игровой логики с использованием deltaTime
-        // Пример использования:
-        // this.enemies.forEach(enemy => enemy.update(deltaTime));
-        // this.bullets.forEach(bullet => bullet.update(deltaTime));
-
-        this.updateUI();
+      console.log(`Frame time: ${deltaTime.toFixed(3)}s`);
+      this.updateUI();
     }
 
     render() {

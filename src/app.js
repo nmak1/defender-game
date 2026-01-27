@@ -1,3 +1,4 @@
+
 const characters = [
   {name: 'мечник', health: 10},
   {name: 'маг', health: 100},
@@ -36,7 +37,7 @@ const logCharacter = ({name, health}) => {
 livingHeroes.forEach(logCharacter);
 
 // Spread оператор (можно убрать или использовать)
-const allCharacters = [...characters, ...heroes]; // Добавляем префикс если не используется
+const _allCharacters = [...characters, ...heroes]; // Добавляем префикс если не используется
 
 // Async/await пример - функция определена, но не вызывается в этом модуле
 // Можно оставить как есть или добавить префикс

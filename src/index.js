@@ -3,11 +3,10 @@ import './styles/main.css';
 import { Game } from './game/core/Game.js';
 import { AssetLoader } from './game/utils/AssetLoader.js';
 import { InputHandler } from './game/utils/InputHandler.js';
-import Character, { characters, alive } from './app.js';
+import { characters, alive } from './app.js';
 
 // Добавляем polyfill для старых браузеров
 import 'core-js/stable';
-// Убрать эту строку: import 'regenerator-runtime/runtime';
 
 console.log('🚀 Defender Game initializing...');
 console.log('Персонажи:', characters);
@@ -39,9 +38,15 @@ const demoES6Features = () => {
     health: 50
   });
 
-  // Rest/Spread
+  // Rest/Spread - определяем enemyTypes перед использованием
   const enemyTypes = ['basic', 'fast', 'tank'];
   const allEnemies = [...enemyTypes, 'boss'];
+
+  // Используем созданные переменные
+  const enemy = createEnemy('fast');
+  console.log('Создан враг:', enemy);
+  console.log('Типы врагов:', enemyTypes);
+  console.log('Все враги:', allEnemies);
 
   return { addScore, width, height };
 };
