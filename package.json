@@ -27,9 +27,9 @@
   "license": "ISC",
   "devDependencies": {
     "@babel/cli": "^7.21.0",
-    "@babel/core": "^7.21.0",
+    "@babel/core": "^7.28.6",
     "@babel/plugin-transform-modules-commonjs": "^7.28.6",
-    "@babel/preset-env": "^7.20.2",
+    "@babel/preset-env": "^7.28.6",
     "@eslint/js": "^9.39.2",
     "babel-jest": "^30.2.0",
     "babel-loader": "^9.1.2",
@@ -57,7 +57,10 @@
       "src/sortCharacters.js"
     ],
     "coverageDirectory": "coverage",
-    "coverageReporters": ["text", "lcov"],
+    "coverageReporters": [
+      "text",
+      "lcov"
+    ],
     "coverageThreshold": {
       "src/health.js": {
         "branches": 100,
@@ -76,7 +79,11 @@
       "**/tests/**/*.test.js",
       "**/?(*.)+(spec|test).js"
     ],
+    "automock": false,
     "transform": {},
-    "moduleFileExtensions": ["js", "json"]
+    "moduleFileExtensions": [
+      "js",
+      "json"
+    ]
   }
 }

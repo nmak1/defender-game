@@ -27,29 +27,65 @@
 # Клонирование репозитория
 git clone https://github.com/nmak1/defender-game.git
 cd defender-game
-
+```
 # Установка зависимостей
+```bash
 npm install
-
+```
 # Запуск в режиме разработки
+```bash
 npm start
-
+```
 # Сборка для продакшена
+```bash
 npm run build
-
+```
+``` bash markdown
 # Defender Game
 
-[![Tests](https://github.com/nmak1/defender-game/actions/workflows/test.yml/badge.svg)](https://github.com/YOUR_USERNAME/defender-game/actions/workflows/test.yml)
-[![codecov](https://codecov.io/gh/nmak1/defender-game/branch/main/graph/badge.svg)](https://codecov.io/gh/YOUR_USERNAME/defender-game)
-
+[![Tests](https://github.com/YOUR_USERNAME/defender-game/actions/workflows/test.yml/badge.svg)](https://github.com/YOUR_USERNAME/defender-game/actions/workflows/test.yml)
+[![codecov](https://codecov.io/gh/YOUR_USERNAME/defender-game/branch/main/graph/badge.svg)](https://codecov.io/gh/YOUR_USERNAME/defender-game)
+```
 ## Unit Testing Project
-
+``` bash
 Проект демонстрирует 100% покрытие кода тестами с использованием Jest.
-
+```
 ### Задачи:
+``` bash
 1. **Чистые функции** - функция индикации здоровья персонажа
 2. **Matchers** - сортировка персонажей по уровню здоровья
-
+```
 ### Запуск тестов:
 ```bash
 npm test
+```
+Проверка покрытия:
+```bash
+npm test -- --coverage
+```
+Линтинг:
+```bash
+npm run lint
+npm run lint:fix
+text
+```
+## 5. Установка и проверка
+
+Выполните команды:
+
+# Установите зависимости
+``` bash
+npm install
+``` 
+# Запустите тесты
+``` bash
+npm test
+``` 
+# Проверьте покрытие
+``` bash
+npm test -- --coverage
+``` 
+# Проверьте линтинг
+``` bash
+npm run lint
+```
