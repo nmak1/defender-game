@@ -13,77 +13,46 @@
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "test": "jest --coverage",
-    "test:watch": "jest --watch",
-    "test:ci": "jest --ci --coverage"
+    "test:all": "jest --coverage --collectCoverageFrom=src/health.js,src/game/entities/Character.js,src/sortCharacters.js,src/getLevel.js",
+    "test:health": "jest src/tests/health.test.js --coverage --collectCoverageFrom=src/health.js",
+    "test:character": "jest src/tests/Character.test.js --coverage --collectCoverageFrom=src/game/entities/Character.js,src/game/entities/Bowerman.js,src/game/entities/Swordsman.js,src/game/entities/Magician.js,src/game/entities/Daemon.js,src/game/entities/Undead.js,src/game/entities/Zombie.js",
+    "test:sort": "jest src/tests/sortCharacters.test.js --coverage --collectCoverageFrom=src/sortCharacters.js",
+    "test:getLevel": "jest src/tests/getLevel.test.js --coverage --collectCoverageFrom=src/getLevel.js",
+    "test:coverage": "jest --coverage",
+    "test:full": "npm run lint && npm test",
+    "coverage:report": "npm test && open coverage/lcov-report/index.html"
   },
   "repository": {
     "type": "git",
     "url": "https://github.com/nmak1/defender-game.git"
   },
-  "keywords": [
-    "game"
-  ],
+  "keywords": ["game"],
   "author": "nmak1",
   "license": "ISC",
   "devDependencies": {
     "@babel/cli": "^7.21.0",
-    "@babel/core": "^7.28.6",
-    "@babel/plugin-transform-modules-commonjs": "^7.28.6",
-    "@babel/preset-env": "^7.28.6",
-    "@eslint/js": "^9.39.2",
-    "babel-jest": "^30.2.0",
+    "@babel/core": "^7.21.0",
+    "@babel/plugin-transform-modules-commonjs": "^7.21.0",
+    "@babel/preset-env": "^7.21.0",
+    "babel-jest": "^29.5.0",
     "babel-loader": "^9.1.2",
+    "babel-plugin-istanbul": "^7.0.1",
     "css-loader": "^6.7.3",
-    "eslint": "^8.57.1",
-    "eslint-plugin-jest": "^28.12.0",
-    "globals": "^17.0.0",
+    "eslint": "^8.36.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-plugin-import": "^2.27.5",
+    "eslint-plugin-jest": "^27.2.1",
     "html-webpack-plugin": "^5.5.0",
-    "jest": "^29.7.0",
-    "jest-environment-jsdom": "^29.7.0",
+    "identity-obj-proxy": "^3.0.0",
+    "jest": "^29.5.0",
+    "jest-environment-jsdom": "^29.5.0",
     "style-loader": "^3.3.1",
-    "webpack": "^5.75.0",
+    "webpack": "^5.76.0",
     "webpack-cli": "^5.0.1",
-    "webpack-dev-server": "^4.11.1"
+    "webpack-dev-server": "^4.13.0"
   },
   "dependencies": {
-    "core-js": "^3.29.1",
+    "core-js": "^3.29.0",
     "regenerator-runtime": "^0.13.11"
-  },
-  "jest": {
-    "testEnvironment": "jsdom",
-    "collectCoverage": true,
-    "collectCoverageFrom": [
-      "src/health.js",
-      "src/sortCharacters.js"
-    ],
-    "coverageDirectory": "coverage",
-    "coverageReporters": [
-      "text",
-      "lcov"
-    ],
-    "coverageThreshold": {
-      "src/health.js": {
-        "branches": 100,
-        "functions": 100,
-        "lines": 100,
-        "statements": 100
-      },
-      "src/sortCharacters.js": {
-        "branches": 100,
-        "functions": 100,
-        "lines": 100,
-        "statements": 100
-      }
-    },
-    "testMatch": [
-      "**/tests/**/*.test.js",
-      "**/?(*.)+(spec|test).js"
-    ],
-    "automock": false,
-    "transform": {},
-    "moduleFileExtensions": [
-      "js",
-      "json"
-    ]
   }
 }

@@ -1,17 +1,11 @@
-const fetchData = require('./http');
+import fetchData from './http.js';
 
-function getLevel(userId) {
-  try {
-    const response = fetchData(`https://server/user/${userId}`);
+export default function getLevel (userId) {
+  const response = fetchData(`https://server/user/${userId}`);
 
-    if (response && response.status === 'ok') {
-      return `Ваш текущий уровень: ${response.level}`;
-    }
-
-    return 'Информация об уровне временно недоступна';
-  } catch (error) {
-    return 'Информация об уровне временно недоступна';
+  if (response.status === 'ok') {
+    return `Ваш текущий уровень: ${response.level}`;
   }
-}
 
-module.exports = { getLevel };
+  return 'Информация об уровне временно недоступна';
+}

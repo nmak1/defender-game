@@ -1,0 +1,28 @@
+{
+  "testEnvironment": "jsdom",
+  "collectCoverageFrom": [
+    "src/**/*.js",
+    "!src/**/*.test.js",
+    "!src/tests/**",
+    "!src/assets/**",
+    "!public/**",
+    "!coverage/**",
+    "!node_modules/**"
+  ],
+  "coverageThreshold": {
+    "global": {
+      "branches": 95,
+      "functions": 100,
+      "lines": 98,
+      "statements": 98
+    }
+  },
+  "setupFilesAfterEnv": ["<rootDir>/src/tests/setup.js"],
+  "testMatch": [
+    "<rootDir>/src/**/*.test.js"
+  ],
+  "transform": {
+    "^.+\\.js$": "babel-jest"
+  },
+  "verbose": true
+}

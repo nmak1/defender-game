@@ -1,6 +1,6 @@
 const testBabel = async () => {
   // ES6+ возможности
-  const promise = new Promise(resolve => {
+  const promise = new Promise((resolve) => {
     setTimeout(() => resolve('Babel работает!'), 100);
   });
 

@@ -1,3 +1,9 @@
+#!/bin/bash
+
+echo "Исправление всех ESLint ошибок..."
+
+# Обновляем .eslintrc.js
+cat > .eslintrc.js << 'EOF'
 module.exports = {
   env: {
     browser: true,
@@ -44,3 +50,22 @@ module.exports = {
     'prefer-template': 'off'
   }
 };
+EOF
+
+echo "✅ .eslintrc.js обновлен"
+
+# Запускаем автоматическое исправление
+npm run lint:fix
+
+# Удаляем пустые строки в конце файлов
+find src -name "*.js" -exec sed -i -e :a -e '/^\n*$/{$d;N;ba' -e '}' {} \;
+
+# Добавляем одну пустую строку в конец
+find src -name "*.js" -exec sh -c 'echo "" >> "$1"' _ {} \;
+
+echo "✅ Все файлы исправлены"
+
+# Проверяем результат
+npm run lint
+
+echo "Готово!"

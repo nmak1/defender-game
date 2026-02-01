@@ -1,54 +1,40 @@
+import {
+  Bowerman,
+  Swordsman,
+  Magician,
+  Daemon
+} from './game/entities/index.js';
 
-const characters = [
-  {name: 'мечник', health: 10},
-  {name: 'маг', health: 100},
-  {name: 'маг', health: 0},
-  {name: 'лучник', health: 0},
-];
+export function createGameCharacters () {
+  const player = new Swordsman('Player');
+  const enemy1 = new Bowerman('EnemyArcher');
+  const enemy2 = new Daemon('EnemyDaemon');
+  const ally = new Magician('AllyMage');
 
-const alive = characters.filter(item => item.health > 0);
-
-// Дополнительный код для демонстрации ES6+ возможностей
-class Character {
-  constructor(name, health) {
-    this.name = name;
-    this.health = health;
-  }
-
-  isAlive() {
-    return this.health > 0;
-  }
-
-  static createHero(name) {
-    return new Character(name, 100);
-  }
+  return { player, enemies: [enemy1, enemy2], ally };
 }
 
-// Использование новых возможностей ES6+
-const heroes = characters.map(char => new Character(char.name, char.health));
-const livingHeroes = heroes.filter(hero => hero.isAlive()); // Используется ниже в logCharacter
+export function gameLoop () {
+  const { player, enemies } = createGameCharacters();
 
-// Стрелочные функции, template strings, деструктуризация
-const logCharacter = ({name, health}) => {
-  console.log(`Персонаж: ${name}, Здоровье: ${health}`);
-};
+  console.log('Game started!');
+  console.log(player.getInfo());
 
-// Используем livingHeroes вместо characters для демонстрации
-livingHeroes.forEach(logCharacter);
+  // Пример боя
+  enemies.forEach((enemy) => {
+    console.log(`${player.name} attacks ${enemy.name}!`);
+    enemy.damage(player.attack);
+    console.log(`${enemy.name} health: ${enemy.health}`);
 
-// Spread оператор (можно убрать или использовать)
-const _allCharacters = [...characters, ...heroes]; // Добавляем префикс если не используется
-
-// Async/await пример - функция определена, но не вызывается в этом модуле
-// Можно оставить как есть или добавить префикс
-const _fetchCharacterData = async () => {
-  return new Promise(resolve => {
-    setTimeout(() => {
-      resolve({name: 'друид', health: 50});
-    }, 1000);
+    if (enemy.health > 0) {
+      player.damage(enemy.attack);
+      console.log(`${player.name} health: ${player.health}`);
+    }
   });
-};
 
-// Экспорт для использования в других модулях
-export { characters, alive, Character, heroes };
-export default Character;
+  if (player.health > 0) {
+    player.levelUp();
+    console.log(`${player.name} leveled up!`);
+    console.log(player.getInfo());
+  }
+}

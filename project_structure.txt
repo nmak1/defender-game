@@ -1,0 +1,101 @@
+Структура проекта
+==================================================
+defender-game
+    ├── .github
+    │   └── workflows
+    │       └── test.yml
+    ├── coverage
+    │   ├── lcov-report
+    │   │   ├── src
+    │   │   │   ├── game
+    │   │   │   │   ├── core
+    │   │   │   │   │   ├── Game.js.html
+    │   │   │   │   │   └── index.html
+    │   │   │   │   ├── entities
+    │   │   │   │   │   ├── Enemy.js.html
+    │   │   │   │   │   ├── index.html
+    │   │   │   │   │   └── Player.js.html
+    │   │   │   │   └── utils
+    │   │   │   │       ├── AssetLoader.js.html
+    │   │   │   │       ├── index.html
+    │   │   │   │       └── InputHandler.js.html
+    │   │   │   ├── health.js.html
+    │   │   │   ├── index.html
+    │   │   │   └── sortCharacters.js.html
+    │   │   ├── base.css
+    │   │   ├── block-navigation.js
+    │   │   ├── favicon.png
+    │   │   ├── health.js.html
+    │   │   ├── index.html
+    │   │   ├── prettify.css
+    │   │   ├── prettify.js
+    │   │   ├── sort-arrow-sprite.png
+    │   │   ├── sortCharacters.js.html
+    │   │   └── sorter.js
+    │   ├── src
+    │   │   ├── game
+    │   │   │   ├── core
+    │   │   │   │   ├── Game.js.html
+    │   │   │   │   └── index.html
+    │   │   │   ├── entities
+    │   │   │   │   ├── Enemy.js.html
+    │   │   │   │   ├── index.html
+    │   │   │   │   └── Player.js.html
+    │   │   │   └── utils
+    │   │   │       ├── AssetLoader.js.html
+    │   │   │       ├── index.html
+    │   │   │       └── InputHandler.js.html
+    │   │   ├── health.js.html
+    │   │   ├── index.html
+    │   │   └── sortCharacters.js.html
+    │   ├── base.css
+    │   ├── block-navigation.js
+    │   ├── favicon.png
+    │   ├── index.html
+    │   ├── lcov.info
+    │   ├── prettify.css
+    │   ├── prettify.js
+    │   ├── sort-arrow-sprite.png
+    │   └── sorter.js
+    ├── public
+    │   ├── favicon.ico
+    │   └── index.html
+    ├── src
+    │   ├── assets
+    │   │   ├── images
+    │   │   └── sounds
+    │   ├── game
+    │   │   ├── core
+    │   │   │   └── Game.js
+    │   │   ├── entities
+    │   │   │   ├── Enemy.js
+    │   │   │   └── Player.js
+    │   │   └── utils
+    │   │       ├── AssetLoader.js
+    │   │       └── InputHandler.js
+    │   ├── styles
+    │   │   └── main.css
+    │   ├── tests
+    │   │   ├── getLevel.test.js
+    │   │   ├── health.test.js
+    │   │   └── sortCharacters.test.js
+    │   ├── app.js
+    │   ├── getLevel.js
+    │   ├── health.js
+    │   ├── http.js
+    │   ├── index.js
+    │   └── sortCharacters.js
+    ├── .babelrc
+    ├── .browserslistrc
+    ├── .eslintignore
+    ├── .eslintrc.js
+    ├── .gitignore
+    ├── babel.config.json
+    ├── et --hard b76066f
+    ├── package-lock.json
+    ├── package.json
+    ├── README.md
+    ├── setup-project.sh
+    ├── test-es6.js
+    ├── tree.py
+    └── webpack.config.js
