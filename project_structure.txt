@@ -12,51 +12,46 @@ defender-game
     │   │   │   │   │   ├── Game.js.html
     │   │   │   │   │   └── index.html
     │   │   │   │   ├── entities
+    │   │   │   │   │   ├── Bowerman.js.html
+    │   │   │   │   │   ├── Character.js.html
+    │   │   │   │   │   ├── Daemon.js.html
     │   │   │   │   │   ├── Enemy.js.html
     │   │   │   │   │   ├── index.html
-    │   │   │   │   │   └── Player.js.html
+    │   │   │   │   │   ├── index.js.html
+    │   │   │   │   │   ├── Magician.js.html
+    │   │   │   │   │   ├── Player.js.html
+    │   │   │   │   │   ├── Swordsman.js.html
+    │   │   │   │   │   ├── Undead.js.html
+    │   │   │   │   │   └── Zombie.js.html
     │   │   │   │   └── utils
     │   │   │   │       ├── AssetLoader.js.html
     │   │   │   │       ├── index.html
     │   │   │   │       └── InputHandler.js.html
+    │   │   │   ├── app.js.html
+    │   │   │   ├── getLevel.js.html
     │   │   │   ├── health.js.html
+    │   │   │   ├── http.js.html
     │   │   │   ├── index.html
+    │   │   │   ├── index.js.html
     │   │   │   └── sortCharacters.js.html
     │   │   ├── base.css
     │   │   ├── block-navigation.js
+    │   │   ├── Bowerman.js.html
+    │   │   ├── Character.js.html
+    │   │   ├── Daemon.js.html
     │   │   ├── favicon.png
-    │   │   ├── health.js.html
     │   │   ├── index.html
+    │   │   ├── Magician.js.html
     │   │   ├── prettify.css
     │   │   ├── prettify.js
     │   │   ├── sort-arrow-sprite.png
-    │   │   ├── sortCharacters.js.html
-    │   │   └── sorter.js
-    │   ├── src
-    │   │   ├── game
-    │   │   │   ├── core
-    │   │   │   │   ├── Game.js.html
-    │   │   │   │   └── index.html
-    │   │   │   ├── entities
-    │   │   │   │   ├── Enemy.js.html
-    │   │   │   │   ├── index.html
-    │   │   │   │   └── Player.js.html
-    │   │   │   └── utils
-    │   │   │       ├── AssetLoader.js.html
-    │   │   │       ├── index.html
-    │   │   │       └── InputHandler.js.html
-    │   │   ├── health.js.html
-    │   │   ├── index.html
-    │   │   └── sortCharacters.js.html
-    │   ├── base.css
-    │   ├── block-navigation.js
-    │   ├── favicon.png
-    │   ├── index.html
-    │   ├── lcov.info
-    │   ├── prettify.css
-    │   ├── prettify.js
-    │   ├── sort-arrow-sprite.png
-    │   └── sorter.js
+    │   │   ├── sorter.js
+    │   │   ├── Swordsman.js.html
+    │   │   ├── Undead.js.html
+    │   │   └── Zombie.js.html
+    │   ├── clover.xml
+    │   ├── coverage-final.json
+    │   └── lcov.info
     ├── public
     │   ├── favicon.ico
     │   └── index.html
@@ -68,33 +63,52 @@ defender-game
     │   │   ├── core
     │   │   │   └── Game.js
     │   │   ├── entities
+    │   │   │   ├── Bowerman.js
+    │   │   │   ├── Character.js
+    │   │   │   ├── Daemon.js
     │   │   │   ├── Enemy.js
-    │   │   │   └── Player.js
+    │   │   │   ├── index.js
+    │   │   │   ├── Magician.js
+    │   │   │   ├── Player.js
+    │   │   │   ├── Swordsman.js
+    │   │   │   ├── Undead.js
+    │   │   │   └── Zombie.js
     │   │   └── utils
     │   │       ├── AssetLoader.js
     │   │       └── InputHandler.js
     │   ├── styles
     │   │   └── main.css
     │   ├── tests
-    │   │   ├── getLevel.test.js
-    │   │   ├── health.test.js
+    │   │   ├── mocks
+    │   │   │   ├── fileMock.js
+    │   │   │   └── styleMock.js
+    │   │   ├── Character.te
+    │   │   ├── Character.test.js
+    │   │   ├── setup.js
     │   │   └── sortCharacters.test.js
     │   ├── app.js
     │   ├── getLevel.js
+    │   ├── health.cjs
     │   ├── health.js
     │   ├── http.js
     │   ├── index.js
     │   └── sortCharacters.js
-    ├── .babelrc
     ├── .browserslistrc
     ├── .eslintignore
     ├── .eslintrc.js
     ├── .gitignore
-    ├── babel.config.json
+    ├── .jestrc.json
+    ├── babel.config.js
+    ├── check-character-coverage.sh
     ├── et --hard b76066f
+    ├── fix-eslint.sh
+    ├── fix-final-lint.sh
+    ├── jest.config.js
     ├── package-lock.json
     ├── package.json
+    ├── project_structure.txt
     ├── README.md
+    ├── run-full-coverage.sh
     ├── setup-project.sh
     ├── test-es6.js
     ├── tree.py

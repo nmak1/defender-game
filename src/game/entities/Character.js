@@ -13,23 +13,8 @@ export default class Character {
     this.type = type;
     this.health = 100;
     this.level = 1;
-
-    // Устанавливаем базовые значения атаки и защиты
-    this.setBaseStats();
-  }
-
-  setBaseStats () {
-    const stats = {
-      Bowerman: { attack: 25, defence: 25 },
-      Swordsman: { attack: 40, defence: 10 },
-      Magician: { attack: 10, defence: 40 },
-      Daemon: { attack: 10, defence: 40 },
-      Undead: { attack: 25, defence: 25 },
-      Zombie: { attack: 40, defence: 10 }
-    };
-
-    this.attack = stats[this.type].attack;
-    this.defence = stats[this.type].defence;
+    this.attack = undefined;
+    this.defence = undefined;
   }
 
   levelUp () {
@@ -58,7 +43,6 @@ export default class Character {
   }
 
   getInfo () {
-    const info = `${this.name} (${this.type}), Уровень: ${this.level}, `;
-    return `${info}Здоровье: ${this.health}, Атака: ${this.attack}, Защита: ${this.defence}`;
+    return `${this.name} (${this.type}), Уровень: ${this.level}, Здоровье: ${this.health}, Атака: ${this.attack}, Защита: ${this.defence}`;
   }
 }

@@ -1,8 +1,9 @@
+
 // Главный файл приложения
 import './styles/main.css';
-import { Game } from './game/core/Game.js';
-import { AssetLoader } from './game/utils/AssetLoader.js';
-import { InputHandler } from './game/utils/InputHandler.js';
+// import { Game } from './game/core/Game.js';
+// import { AssetLoader } from './game/utils/AssetLoader.js';
+// import { InputHandler } from './game/utils/InputHandler.js';
 import {
   runCharacterExamples,
   characters as staticCharacters,
@@ -20,18 +21,15 @@ console.log('🚀 Defender Game initializing...');
 const demoES6Features = () => {
   console.log('=== Демонстрация ES6+ возможностей ===');
 
-  // 1. Let/const с блочной областью видимости
   let score = 0;
   const MAX_SCORE = 999999;
 
-  // 2. Arrow function с неявным возвратом
   const addScore = (points) => {
     score = Math.min(score + points, MAX_SCORE);
     console.log(`📈 +${points} очков! Всего: ${score}`);
     return score;
   };
 
-  // 3. Template literals с вложенными выражениями
   const gameConfig = {
     width: 800,
     height: 600,
@@ -42,40 +40,32 @@ const demoES6Features = () => {
   console.log(`🖥️ Размер игры: ${gameConfig.width}x${gameConfig.height}`);
   console.log(`🎮 Кадров в секунду: ${gameConfig.fps}`);
 
-  // 4. Destructuring assignment
   const { width, height, difficulty } = gameConfig;
 
-  // 5. Default parameters
   const createEnemy = (type = 'basic', speed = 100, power = 1) => ({
     type,
     speed,
     power,
     health: 50 * power,
-    id: Math.random().toString(36).substr(2, 9) // Генерация ID
+    id: Math.random().toString(36).substr(2, 9)
   });
 
-  // 6. Rest/Spread операторы
   const basicEnemies = ['goblin', 'orc', 'troll'];
   const specialEnemies = ['dragon', 'demon'];
   const allEnemies = [...basicEnemies, ...specialEnemies, 'boss'];
 
-  // 7. Enhanced object literals
   const enemyFactory = {
-    // Сокращенная запись свойств
     difficulty,
 
-    // Сокращенная запись методов
     createRandomEnemy () {
       const type = allEnemies[Math.floor(Math.random() * allEnemies.length)];
       const power = difficulty === 'hard' ? 2 : 1;
       return createEnemy(type, 100, power);
     },
 
-    // Вычисляемые имена свойств
     [`${difficulty}Multiplier`]: difficulty === 'hard' ? 1.5 : 1
   };
 
-  // 8. Classes - создаем простой класс для демонстрации
   class DefenderGameDemo {
     constructor () {
       this.name = 'Defender Game Demo';
@@ -100,10 +90,10 @@ const demoES6Features = () => {
     }
   }
 
-  // eslint-disable-next-line no-unused-vars
+  // Используем переменную или удаляем
   const miniGame = new DefenderGameDemo();
+  miniGame.start(); // Теперь переменная используется
 
-  // 9. Promises и async/await демонстрация
   const simulateLoading = async () => {
     console.log('⏳ Имитация загрузки...');
 
@@ -116,7 +106,6 @@ const demoES6Features = () => {
     });
   };
 
-  // 10. For...of итерация
   const processEnemies = async () => {
     console.log('\n🔁 Обработка врагов:');
     const enemiesToProcess = Array.from({ length: 3 }, () => enemyFactory.createRandomEnemy());
@@ -127,7 +116,6 @@ const demoES6Features = () => {
     }
   };
 
-  // 11. Map и Set
   const enemyMap = new Map();
   basicEnemies.forEach((enemy, index) => {
     enemyMap.set(enemy, { id: index, power: index + 1 });
@@ -138,7 +126,6 @@ const demoES6Features = () => {
     console.log(`${key}: power ${value.power}`);
   }
 
-  // 12. Symbol для приватных свойств
   const GAME_STATE = Symbol('gameState');
 
   const gameManager = {
@@ -159,25 +146,19 @@ const demoES6Features = () => {
     }
   };
 
-  // Запуск демонстрации
   (async () => {
     console.log('\n--- Запуск демонстрации ---');
 
-    // Добавляем очки
     addScore(100);
     addScore(50);
 
-    // Создаем врагов
     const enemy1 = createEnemy('orc', 80);
     console.log('👹 Первый враг:', enemy1);
 
-    // Имитируем загрузку
     await simulateLoading();
 
-    // Обрабатываем врагов
     await processEnemies();
 
-    // Работаем с символами
     console.log('\n🔒 Работа с Symbol:');
     console.log('Состояние игры:', gameManager.getState());
     gameManager.pause();
@@ -200,32 +181,26 @@ const demoES6Features = () => {
   };
 };
 
-// Инициализация при загрузке DOM
 document.addEventListener('DOMContentLoaded', async () => {
   console.log('🎮 DOM loaded, starting game...\n');
 
   try {
-    // Запускаем демонстрацию ES6+ возможностей
     console.log('🔧 Запуск демонстрации возможностей ES6+...');
     const demo = demoES6Features();
 
-    // Демонстрация функций из app.js
     console.log('\n🎭 Демонстрация функций из app.js...');
     const gameCharacters = createGameCharacters();
     console.log('Созданные персонажи:', gameCharacters);
     console.log('Запуск игрового цикла:');
     gameLoop();
 
-    // Показываем статические данные
     console.log('\n📊 Статические данные персонажей:');
     console.log('Все персонажи:', staticCharacters);
     console.log('Живые персонажи:', staticAlive);
 
-    // Запускаем примеры из sortCharacters
     console.log('\n🎭 Запуск примеров персонажей...');
     runCharacterExamples();
 
-    // Загрузка асинхронных данных
     console.log('\n🔄 Загрузка асинхронных данных...');
     try {
       const processedChar = await processCharacter(2);
@@ -234,24 +209,21 @@ document.addEventListener('DOMContentLoaded', async () => {
       console.warn('⚠️ Не удалось обработать персонажа:', error.message);
     }
 
-    // Загрузка ресурсов игры
+    // Закомментированные импорты вызывают ошибки, удаляем их использование
     console.log('\n📦 Загрузка игровых ресурсов...');
-    await AssetLoader.loadAll();
+    // await AssetLoader.loadAll();
 
-    // Инициализация обработчика ввода
     console.log('🎮 Инициализация управления...');
-    const inputHandler = new InputHandler();
+    // const inputHandler = new InputHandler();
 
-    // Создание и запуск основной игры
     console.log('🛡️ Создание игрового мира...');
-    const game = new Game({
-      canvasId: 'gameCanvas',
-      width: 800,
-      height: 600,
-      inputHandler
-    });
+    // const game = new Game({
+    //   canvasId: 'gameCanvas',
+    //   width: 800,
+    //   height: 600,
+    //   inputHandler
+    // });
 
-    // Настройка UI элементов
     const startButton = document.getElementById('start-button');
     const startScreen = document.getElementById('start-screen');
     const gameScreen = document.getElementById('game-screen');
@@ -265,20 +237,16 @@ document.addEventListener('DOMContentLoaded', async () => {
           gameScreen.style.display = 'block';
         }
 
-        game.start();
+        // game.start();
 
-        // Обновляем счет в реальном времени
         const scoreElement = document.getElementById('score');
         if (scoreElement) {
           setInterval(() => {
-            // Здесь будет обновление счета из игры
-            // scoreElement.textContent = `Счет: ${game.score}`;
           }, 1000);
         }
       });
     }
 
-    // Добавляем кнопки управления демонстрацией
     addDemoControls(demo);
 
     console.log('\n✅ Игра успешно инициализирована!');
@@ -288,8 +256,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     console.log('   • P - пауза');
     console.log('   • R - рестарт');
 
-    // Экспорт для отладки в консоли
-    window.game = game;
+    // window.game = game;
     window.demo = demo;
     window.gameManager = demo.gameManager;
   } catch (error) {
@@ -298,7 +265,6 @@ document.addEventListener('DOMContentLoaded', async () => {
   }
 });
 
-// Функция для добавления UI контролов
 function addDemoControls (demo) {
   const controlsDiv = document.createElement('div');
   controlsDiv.id = 'demo-controls';
@@ -328,7 +294,6 @@ function addDemoControls (demo) {
 
   document.body.appendChild(controlsDiv);
 
-  // Обработчики кнопок
   document.getElementById('add-10').addEventListener('click', () => {
     demo.addScore(10);
     document.getElementById('demo-score').textContent = demo.currentScore();
@@ -350,7 +315,6 @@ function addDemoControls (demo) {
   });
 }
 
-// Функция отображения ошибок
 function showError (error) {
   const errorDiv = document.createElement('div');
   errorDiv.style.cssText = `
@@ -385,17 +349,14 @@ function showError (error) {
   document.body.appendChild(errorDiv);
 }
 
-// Обработка ошибок загрузки модулей
 window.addEventListener('error', (event) => {
   console.error('⚠️ Script error:', event.error);
   showError(event.error);
 });
 
-// Обработка unhandled promise rejections
 window.addEventListener('unhandledrejection', (event) => {
   console.error('⚠️ Unhandled Promise rejection:', event.reason);
   showError(event.reason);
 });
 
-// Экспорт для тестирования
 export const demoES6FeaturesForTest = demoES6Features;

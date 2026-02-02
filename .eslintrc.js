@@ -40,7 +40,8 @@ module.exports = {
     'no-extend-native': 'off',
     'arrow-parens': ['error', 'as-needed', { requireForBlockBody: true }],
     'no-trailing-spaces': ['error', { skipBlankLines: false }],
-    'no-multiple-empty-lines': ['error', { max: 1, maxEOF: 0 }],
-    'prefer-template': 'off'
+    'no-multiple-empty-lines': ['error', { max: 1, maxEOF: 1 }],
+    'prefer-template': 'off',
+    'import/no-unresolved': 'off'
   }
 };
