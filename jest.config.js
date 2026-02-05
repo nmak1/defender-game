@@ -8,6 +8,8 @@ module.exports = {
     'src/game/entities/Daemon.js',
     'src/game/entities/Undead.js',
     'src/game/entities/Zombie.js',
+    'src/sortCharacters.js',  // Для задания "for ... in"
+    'src/getSpecialAttacks.js', // Для задания "Destructuring"
     '!src/**/*.test.js',
     '!src/tests/**',
     '!src/assets/**',
@@ -17,6 +19,18 @@ module.exports = {
   ],
   coverageThreshold: {
     'src/game/entities/Character.js': {
+      branches: 100,
+      functions: 100,
+      lines: 100,
+      statements: 100
+    },
+    'src/sortCharacters.js': {
+      branches: 100,
+      functions: 100,
+      lines: 100,
+      statements: 100
+    },
+    'src/getSpecialAttacks.js': {
       branches: 100,
       functions: 100,
       lines: 100,

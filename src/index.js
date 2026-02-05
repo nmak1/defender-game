@@ -1,15 +1,15 @@
-
 // Главный файл приложения
 import './styles/main.css';
 // import { Game } from './game/core/Game.js';
 // import { AssetLoader } from './game/utils/AssetLoader.js';
 // import { InputHandler } from './game/utils/InputHandler.js';
+// Импортируем старую функциональность из отдельного файла
 import {
   runCharacterExamples,
   characters as staticCharacters,
   alive as staticAlive,
   processCharacter
-} from './sortCharacters.js';
+} from './oldSortCharacters.js';
 import { createGameCharacters, gameLoop } from './app.js';
 
 // Добавляем polyfill для старых браузеров

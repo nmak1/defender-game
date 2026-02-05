@@ -8,47 +8,28 @@ defender-game
     │   ├── lcov-report
     │   │   ├── src
     │   │   │   ├── game
-    │   │   │   │   ├── core
-    │   │   │   │   │   ├── Game.js.html
-    │   │   │   │   │   └── index.html
-    │   │   │   │   ├── entities
-    │   │   │   │   │   ├── Bowerman.js.html
-    │   │   │   │   │   ├── Character.js.html
-    │   │   │   │   │   ├── Daemon.js.html
-    │   │   │   │   │   ├── Enemy.js.html
-    │   │   │   │   │   ├── index.html
-    │   │   │   │   │   ├── index.js.html
-    │   │   │   │   │   ├── Magician.js.html
-    │   │   │   │   │   ├── Player.js.html
-    │   │   │   │   │   ├── Swordsman.js.html
-    │   │   │   │   │   ├── Undead.js.html
-    │   │   │   │   │   └── Zombie.js.html
-    │   │   │   │   └── utils
-    │   │   │   │       ├── AssetLoader.js.html
+    │   │   │   │   └── entities
+    │   │   │   │       ├── Bowerman.js.html
+    │   │   │   │       ├── Character.js.html
+    │   │   │   │       ├── Daemon.js.html
     │   │   │   │       ├── index.html
-    │   │   │   │       └── InputHandler.js.html
-    │   │   │   ├── app.js.html
-    │   │   │   ├── getLevel.js.html
-    │   │   │   ├── health.js.html
-    │   │   │   ├── http.js.html
+    │   │   │   │       ├── Magician.js.html
+    │   │   │   │       ├── Swordsman.js.html
+    │   │   │   │       ├── Undead.js.html
+    │   │   │   │       └── Zombie.js.html
+    │   │   │   ├── getSpecialAttacks.js.html
     │   │   │   ├── index.html
-    │   │   │   ├── index.js.html
     │   │   │   └── sortCharacters.js.html
     │   │   ├── base.css
     │   │   ├── block-navigation.js
-    │   │   ├── Bowerman.js.html
-    │   │   ├── Character.js.html
-    │   │   ├── Daemon.js.html
     │   │   ├── favicon.png
+    │   │   ├── getSpecialAttacks.js.html
     │   │   ├── index.html
-    │   │   ├── Magician.js.html
     │   │   ├── prettify.css
     │   │   ├── prettify.js
     │   │   ├── sort-arrow-sprite.png
-    │   │   ├── sorter.js
-    │   │   ├── Swordsman.js.html
-    │   │   ├── Undead.js.html
-    │   │   └── Zombie.js.html
+    │   │   ├── sortCharacters.js.html
+    │   │   └── sorter.js
     │   ├── clover.xml
     │   ├── coverage-final.json
     │   └── lcov.info
@@ -84,15 +65,20 @@ defender-game
     │   │   │   └── styleMock.js
     │   │   ├── Character.te
     │   │   ├── Character.test.js
+    │   │   ├── getSpecialAttacks.test.js
     │   │   ├── setup.js
     │   │   └── sortCharacters.test.js
     │   ├── app.js
     │   ├── getLevel.js
+    │   ├── getSpecialAttacks.js
+    │   ├── getSpecialAttacks.js.backup
     │   ├── health.cjs
     │   ├── health.js
     │   ├── http.js
     │   ├── index.js
-    │   └── sortCharacters.js
+    │   ├── oldSortCharacters.js
+    │   ├── sortCharacters.js
+    │   └── sortCharacters.js.backup
     ├── .browserslistrc
     ├── .eslintignore
     ├── .eslintrc.js
@@ -101,8 +87,10 @@ defender-game
     ├── babel.config.js
     ├── check-character-coverage.sh
     ├── et --hard b76066f
+    ├── fix-all-imports.sh
     ├── fix-eslint.sh
     ├── fix-final-lint.sh
+    ├── fix-line-endings.sh
     ├── jest.config.js
     ├── package-lock.json
     ├── package.json

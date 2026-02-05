@@ -13,11 +13,12 @@
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "test": "jest --coverage",
-    "test:all": "jest --coverage --collectCoverageFrom=src/health.js,src/game/entities/Character.js,src/sortCharacters.js,src/getLevel.js",
+    "test:all": "jest --coverage --collectCoverageFrom=src/health.js,src/game/entities/Character.js,src/sortCharacters.js,src/getLevel.js,src/getSpecialAttacks.js",
     "test:health": "jest src/tests/health.test.js --coverage --collectCoverageFrom=src/health.js",
     "test:character": "jest src/tests/Character.test.js --coverage --collectCoverageFrom=src/game/entities/Character.js,src/game/entities/Bowerman.js,src/game/entities/Swordsman.js,src/game/entities/Magician.js,src/game/entities/Daemon.js,src/game/entities/Undead.js,src/game/entities/Zombie.js",
     "test:sort": "jest src/tests/sortCharacters.test.js --coverage --collectCoverageFrom=src/sortCharacters.js",
     "test:getLevel": "jest src/tests/getLevel.test.js --coverage --collectCoverageFrom=src/getLevel.js",
+    "test:getSpecialAttacks": "jest src/tests/getSpecialAttacks.test.js --coverage --collectCoverageFrom=src/getSpecialAttacks.js",
     "test:coverage": "jest --coverage",
     "test:full": "npm run lint && npm test",
     "coverage:report": "npm test && open coverage/lcov-report/index.html"

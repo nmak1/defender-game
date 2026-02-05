@@ -1,520 +1,299 @@
-const module = require('../sortCharacters.js');
+// src/tests/sortCharacters.test.js
+const { orderByProps } = require('../sortCharacters.js');
 
-describe('sortCharacters.js - 100% Coverage Tests', () => {
-  beforeEach(() => {
-    jest.clearAllMocks();
-    jest.spyOn(console, 'log').mockImplementation(() => {});
-    jest.spyOn(console, 'error').mockImplementation(() => {});
+describe('orderByProps function', () => {
+  const obj = {
+    name: 'мечник',
+    health: 10,
+    level: 2,
+    attack: 80,
+    defence: 40
+  };
+
+  test('should sort properties according to given order', () => {
+    const order = ['name', 'level'];
+    const result = orderByProps(obj, order);
+
+    expect(result).toEqual([
+      { key: 'name', value: 'мечник' },
+      { key: 'level', value: 2 },
+      { key: 'attack', value: 80 },
+      { key: 'defence', value: 40 },
+      { key: 'health', value: 10 }
+    ]);
   });
 
-  afterEach(() => {
-    jest.restoreAllMocks();
-    // Восстанавливаем оригинальную реализацию после каждого теста
-    module.__testExports.fetchCharacterDataImpl = module.__testExports.originalFetchCharacterDataImpl;
+  test('should handle empty order array', () => {
+    const result = orderByProps(obj, []);
+
+    expect(result).toEqual([
+      { key: 'attack', value: 80 },
+      { key: 'defence', value: 40 },
+      { key: 'health', value: 10 },
+      { key: 'level', value: 2 },
+      { key: 'name', value: 'мечник' }
+    ]);
   });
 
-  // Базовые тесты экспорта
-  test('модуль экспортирует все функции', () => {
-    expect(typeof module.sortCharacters).toBe('function');
-    expect(typeof module.createCharactersFromData).toBe('function');
-    expect(typeof module.GameCharacter).toBe('function');
-    expect(typeof module.fetchCharacterData).toBe('function');
-    expect(typeof module.processCharacter).toBe('function');
-    expect(typeof module.runCharacterExamples).toBe('function');
-    expect(typeof module.characterGenerator).toBe('function');
-    expect(typeof module.logCharacter).toBe('function');
-    expect(typeof module.__testExports).toBe('object');
+  test('should handle order with non-existent keys', () => {
+    const order = ['name', 'nonExistent', 'level'];
+    const result = orderByProps(obj, order);
+
+    expect(result).toEqual([
+      { key: 'name', value: 'мечник' },
+      { key: 'level', value: 2 },
+      { key: 'attack', value: 80 },
+      { key: 'defence', value: 40 },
+      { key: 'health', value: 10 }
+    ]);
   });
 
-  test('модуль экспортирует константы', () => {
-    expect(Array.isArray(module.characters)).toBe(true);
-    expect(Array.isArray(module.alive)).toBe(true);
-    expect(Array.isArray(module.heroes)).toBe(true);
-    expect(Array.isArray(module.allCharacters)).toBe(true);
+  test('should throw error if first argument is not object', () => {
+    expect(() => orderByProps(null, [])).toThrow('Первый аргумент должен быть объектом');
+    expect(() => orderByProps(undefined, [])).toThrow('Первый аргумент должен быть объектом');
+    expect(() => orderByProps('string', [])).toThrow('Первый аргумент должен быть объектом');
+    expect(() => orderByProps(123, [])).toThrow('Первый аргумент должен быть объектом');
+    expect(() => orderByProps([], [])).toThrow('Первый аргумент должен быть объектом');
+    expect(() => orderByProps(() => {}, [])).toThrow('Первый аргумент должен быть объектом');
   });
 
-  // sortCharacters function tests
-  test('sortCharacters сортирует по убыванию здоровья', () => {
-    const result = module.sortCharacters(module.characters);
-    expect(result[0].health).toBe(100);
-    expect(result[1].health).toBe(10);
-    expect(result[2].health).toBe(0);
-    expect(result[3].health).toBe(0);
+  test('should throw error if second argument is not array', () => {
+    expect(() => orderByProps({}, null)).toThrow('Второй аргумент должен быть массивом');
+    expect(() => orderByProps({}, 'string')).toThrow('Второй аргумент должен быть массивом');
+    expect(() => orderByProps({}, 123)).toThrow('Второй аргумент должен быть массивом');
+    expect(() => orderByProps({}, {})).toThrow('Второй аргумент должен быть массивом');
+    expect(() => orderByProps({}, () => {})).toThrow('Второй аргумент должен быть массивом');
   });
 
-  test('sortCharacters живые перед мертвыми', () => {
-    const testCharacters = [
-      { name: 'мертвый', health: 0 },
-      { name: 'живой', health: 50 }
-    ];
-    const result = module.sortCharacters(testCharacters);
-    expect(result[0].name).toBe('живой');
-    expect(result[1].name).toBe('мертвый');
+  test('should handle object with only some ordered properties', () => {
+    const smallObj = { name: 'test', health: 100 };
+    const result = orderByProps(smallObj, ['health', 'name', 'level']);
+
+    expect(result).toEqual([
+      { key: 'health', value: 100 },
+      { key: 'name', value: 'test' }
+    ]);
   });
 
-  test('sortCharacters ошибка при не-массиве', () => {
-    expect(() => module.sortCharacters(null)).toThrow('characters должен быть массивом');
-    expect(() => module.sortCharacters(undefined)).toThrow('characters должен быть массивом');
-    expect(() => module.sortCharacters('string')).toThrow('characters должен быть массивом');
-    expect(() => module.sortCharacters(123)).toThrow('characters должен быть массивом');
-    expect(() => module.sortCharacters({})).toThrow('characters должен быть массивом');
+  test('should sort remaining properties alphabetically', () => {
+    const testObj = { z: 1, a: 2, m: 3 };
+    const result = orderByProps(testObj, []);
+
+    expect(result).toEqual([
+      { key: 'a', value: 2 },
+      { key: 'm', value: 3 },
+      { key: 'z', value: 1 }
+    ]);
   });
 
-  // createCharactersFromData function tests
-  test('createCharactersFromData преобразует данные', () => {
-    const data = [
-      { name: 'мечник', health: 10 },
-      { name: 'маг', health: 100 }
-    ];
-    const result = module.createCharactersFromData(data);
-    expect(result[0].type).toBe('Swordsman');
-    expect(result[1].type).toBe('Magician');
+  test('should preserve original object', () => {
+    const original = { ...obj };
+    orderByProps(obj, ['name']);
+
+    expect(obj).toEqual(original);
   });
 
-  test('createCharactersFromData ошибка при не-массиве', () => {
-    expect(() => module.createCharactersFromData(null)).toThrow('data должен быть массивом');
-    expect(() => module.createCharactersFromData(undefined)).toThrow('data должен быть массивом');
-    expect(() => module.createCharactersFromData('string')).toThrow('data должен быть массивом');
-    expect(() => module.createCharactersFromData(123)).toThrow('data должен быть массивом');
-    expect(() => module.createCharactersFromData({})).toThrow('data должен быть массивом');
+  test('should handle object with inherited properties', () => {
+    const parent = { inherited: 'parent' };
+    const child = Object.create(parent);
+    child.own = 'child';
+
+    const result = orderByProps(child, []);
+
+    // Должен учитывать только собственные свойства
+    expect(result).toEqual([
+      { key: 'own', value: 'child' }
+    ]);
   });
 
-  test('createCharactersFromData ошибка при неизвестном типе', () => {
-    expect(() => module.createCharactersFromData([{ name: 'неизвестный', health: 10 }]))
-      .toThrow('Неизвестный тип персонажа: неизвестный');
+  test('should handle order with duplicate keys', () => {
+    const order = ['name', 'name', 'level'];
+    const result = orderByProps(obj, order);
+
+    // Дубликаты не должны создавать дублирующиеся записи
+    expect(result).toEqual([
+      { key: 'name', value: 'мечник' },
+      { key: 'level', value: 2 },
+      { key: 'attack', value: 80 },
+      { key: 'defence', value: 40 },
+      { key: 'health', value: 10 }
+    ]);
   });
 
-  // GameCharacter class tests
-  test('GameCharacter создает экземпляр', () => {
-    const char = new module.GameCharacter('тест', 50);
-    expect(char.name).toBe('тест');
-    expect(char.health).toBe(50);
-    expect(char.createdAt).toBeDefined();
-    expect(char.isAlive()).toBe(true);
-    expect(char.status).toBe('жив');
+  test('should handle complex object with different value types', () => {
+    const complexObj = {
+      z: null,
+      a: undefined,
+      m: { nested: 'object' },
+      b: [1, 2, 3],
+      c () {},
+      d: 123,
+      e: 'string'
+    };
+
+    const result = orderByProps(complexObj, ['c', 'e']);
+
+    expect(result).toEqual([
+      { key: 'c', value: expect.any(Function) },
+      { key: 'e', value: 'string' },
+      { key: 'a', value: undefined },
+      { key: 'b', value: [1, 2, 3] },
+      { key: 'd', value: 123 },
+      { key: 'm', value: { nested: 'object' } },
+      { key: 'z', value: null }
+    ]);
   });
 
-  test('GameCharacter статический метод createHero', () => {
-    const hero = module.GameCharacter.createHero('герой');
-    expect(hero.name).toBe('герой');
-    expect(hero.health).toBe(100);
+  test('should handle empty object', () => {
+    const result = orderByProps({}, ['key1', 'key2']);
+
+    expect(result).toEqual([]);
   });
 
-  test('GameCharacter разные значения здоровья', () => {
-    expect(new module.GameCharacter('1', 1).isAlive()).toBe(true);
-    expect(new module.GameCharacter('0', 0).isAlive()).toBe(false);
-    expect(new module.GameCharacter('-1', -1).isAlive()).toBe(false);
-    expect(new module.GameCharacter('null', null).isAlive()).toBe(false);
-    expect(new module.GameCharacter('undefined', undefined).isAlive()).toBe(false);
+  test('should handle object with only ordered properties', () => {
+    const testObj = { a: 1, b: 2, c: 3 };
+    const result = orderByProps(testObj, ['c', 'a', 'b']);
+
+    expect(result).toEqual([
+      { key: 'c', value: 3 },
+      { key: 'a', value: 1 },
+      { key: 'b', value: 2 }
+    ]);
   });
 
-  // logCharacter function tests
-  test('logCharacter логирует персонажа', () => {
-    const result = module.logCharacter({ name: 'тест', health: 50, level: 2 });
-    expect(result).toEqual({ name: 'тест', health: 50, status: 'жив' });
-    expect(console.log).toHaveBeenCalled();
+  test('should use for...in loop (check for own properties)', () => {
+    const testObj = { a: 1, b: 2 };
+    const spy = jest.spyOn(Object.prototype, 'hasOwnProperty');
+
+    orderByProps(testObj, []);
+
+    // Проверяем, что hasOwnProperty вызывается для каждого свойства
+    expect(spy).toHaveBeenCalledTimes(2);
+    spy.mockRestore();
   });
 
-  test('logCharacter с разными значениями здоровья', () => {
-    module.logCharacter({ name: 'живой', health: 1 });
-    module.logCharacter({ name: 'мертвый', health: 0 });
-    module.logCharacter({ name: 'отрицательный', health: -1 });
-    module.logCharacter({ name: 'null', health: null });
-    module.logCharacter({ name: 'undefined', health: undefined });
-    expect(console.log).toHaveBeenCalledTimes(5);
+  // Дополнительные тесты для 100% покрытия
+  test('should handle Symbol properties', () => {
+    const sym = Symbol('test');
+    const testObj = {
+      [sym]: 'symbol value',
+      regular: 'regular value'
+    };
+
+    const result = orderByProps(testObj, ['regular']);
+
+    // Symbol свойства должны игнорироваться
+    expect(result).toEqual([
+      { key: 'regular', value: 'regular value' }
+    ]);
   });
 
-  // characterGenerator function tests
-  test('characterGenerator создает генератор', () => {
-    const data = [{ name: 'тест', health: 50 }];
-    const gen = module.characterGenerator(data);
-    const result = gen.next();
-    expect(result.value.name).toBe('тест');
-    expect(result.done).toBe(false);
+  test('should handle object with only Symbol properties', () => {
+    const sym = Symbol('test');
+    const testObj = {
+      [sym]: 'symbol value'
+    };
+
+    const result = orderByProps(testObj, []);
+
+    // Symbol свойства должны игнорироваться
+    expect(result).toEqual([]);
   });
 
-  test('characterGenerator ошибка при не-массиве', () => {
-    expect(() => {
-      const gen = module.characterGenerator(null);
-      gen.next();
-    }).toThrow('data должен быть массивом');
+  test('should handle object with getter properties', () => {
+    const testObj = {
+      a: 1,
+      get b () {
+        return this.a * 2;
+      }
+    };
+
+    const result = orderByProps(testObj, ['b', 'a']);
+
+    expect(result).toEqual([
+      { key: 'b', value: 2 },
+      { key: 'a', value: 1 }
+    ]);
   });
 
-  test('characterGenerator с пустым массивом', () => {
-    const gen = module.characterGenerator([]);
-    const result = gen.next();
-    expect(result.value).toBeUndefined();
-    expect(result.done).toBe(true);
+  test('should handle object with non-enumerable properties', () => {
+    const testObj = { a: 1 };
+    Object.defineProperty(testObj, 'hidden', {
+      value: 'hidden value',
+      enumerable: false
+    });
+
+    const result = orderByProps(testObj, ['a']);
+
+    // Неперечисляемые свойства должны игнорироваться
+    expect(result).toEqual([
+      { key: 'a', value: 1 }
+    ]);
   });
 
-  // Константы tests
-  test('allCharacters содержит корректные данные', () => {
-    expect(module.allCharacters).toHaveLength(8);
-    expect(module.allCharacters[0]).toEqual({ name: 'мечник', health: 10 });
-    expect(module.allCharacters[4]).toBeInstanceOf(module.GameCharacter);
-    expect(module.allCharacters[4].name).toBe('мечник');
-  });
+  // Тесты для покрытия CommonJS условий экспорта
+  describe('CommonJS export coverage', () => {
+    let originalModule;
+    let originalExports;
 
-  test('alive содержит только живых персонажей', () => {
-    expect(module.alive).toHaveLength(2);
-    expect(module.alive.every(c => c.health > 0)).toBe(true);
-  });
-
-  // КРИТИЧЕСКИ ВАЖНЫЕ ТЕСТЫ для полного покрытия fetchCharacterDataImpl
-  describe('fetchCharacterDataImpl полное покрытие', () => {
     beforeEach(() => {
-      jest.useFakeTimers();
+      // Сохраняем оригинальные значения
+      originalModule = global.module;
+      originalExports = global.module?.exports;
     });
 
     afterEach(() => {
-      jest.useRealTimers();
-    });
+      // Восстанавливаем оригинальные значения
+      if (originalModule !== undefined) {
+        global.module = originalModule;
+      } else {
+        delete global.module;
+      }
 
-    test('успешный resolve для id=1', async () => {
-      const promise = module.fetchCharacterData(1);
-      jest.advanceTimersByTime(10);
-      const result = await promise;
-      expect(result).toEqual({ id: 1, name: 'друид', health: 50 });
-    });
-
-    test('успешный resolve для id=2', async () => {
-      const promise = module.fetchCharacterData(2);
-      jest.advanceTimersByTime(10);
-      const result = await promise;
-      expect(result).toEqual({ id: 2, name: 'рыцарь', health: 150 });
-    });
-
-    test('успешный resolve для id=3', async () => {
-      const promise = module.fetchCharacterData(3);
-      jest.advanceTimersByTime(10);
-      const result = await promise;
-      expect(result).toEqual({ id: 3, name: 'ведьмак', health: 120 });
-    });
-
-    test('reject для несуществующего id', async () => {
-      const promise = module.fetchCharacterData(999);
-      jest.advanceTimersByTime(10);
-      await expect(promise).rejects.toThrow('Персонаж не найден');
-    });
-  });
-
-  // Асинхронные функции
-  describe('Асинхронные функции', () => {
-    test('fetchCharacterData возвращает промис', () => {
-      jest.useFakeTimers();
-      const promise = module.fetchCharacterData(1);
-      expect(promise).toBeInstanceOf(Promise);
-      jest.advanceTimersByTime(10);
-      return promise.then((result) => {
-        expect(result).toEqual({ id: 1, name: 'друид', health: 50 });
-        jest.useRealTimers();
-      });
-    });
-
-    test('fetchCharacterData работает', async () => {
-      jest.useFakeTimers();
-      const promise = module.fetchCharacterData(1);
-      jest.advanceTimersByTime(10);
-      const result = await promise;
-      expect(result).toEqual({ id: 1, name: 'друид', health: 50 });
-      jest.useRealTimers();
-    });
-
-    test('fetchCharacterData работает для всех id', async () => {
-      jest.useFakeTimers();
-      // Используем один промис за раз с продвижением таймеров
-      const promise1 = module.fetchCharacterData(1);
-      jest.advanceTimersByTime(10);
-      const result1 = await promise1;
-      expect(result1.id).toBe(1);
-
-      const promise2 = module.fetchCharacterData(2);
-      jest.advanceTimersByTime(10);
-      const result2 = await promise2;
-      expect(result2.id).toBe(2);
-
-      const promise3 = module.fetchCharacterData(3);
-      jest.advanceTimersByTime(10);
-      const result3 = await promise3;
-      expect(result3.id).toBe(3);
-      jest.useRealTimers();
-    });
-
-    test('fetchCharacterData reject при несуществующем id', async () => {
-      jest.useFakeTimers();
-      const promise = module.fetchCharacterData(999);
-      jest.advanceTimersByTime(10);
-      await expect(promise).rejects.toThrow('Персонаж не найден');
-      jest.useRealTimers();
-    });
-
-    // Тесты для validateCharacterData
-    test('validateCharacterData проходит валидацию при корректных данных', () => {
-      expect(() => module.__testExports.validateCharacterData({
-        name: 'тест',
-        health: 50
-      })).not.toThrow();
-    });
-
-    test('validateCharacterData выбрасывает ошибку при пустом имени', () => {
-      expect(() => module.__testExports.validateCharacterData({
-        name: '',
-        health: 50
-      })).toThrow('Некорректные данные персонажа');
-    });
-
-    test('validateCharacterData выбрасывает ошибку при отсутствии имени', () => {
-      expect(() => module.__testExports.validateCharacterData({
-        health: 50
-      })).toThrow('Некорректные данные персонажа');
-    });
-
-    test('validateCharacterData выбрасывает ошибку при null health', () => {
-      expect(() => module.__testExports.validateCharacterData({
-        name: 'тест',
-        health: null
-      })).toThrow('Некорректные данные персонажа');
-    });
-
-    test('validateCharacterData выбрасывает ошибку при undefined health', () => {
-      expect(() => module.__testExports.validateCharacterData({
-        name: 'тест',
-        health: undefined
-      })).toThrow('Некорректные данные персонажа');
-    });
-
-    test('validateCharacterData выбрасывает ошибку при отсутствии health', () => {
-      expect(() => module.__testExports.validateCharacterData({
-        name: 'тест'
-      })).toThrow('Некорректные данные персонажа');
-    });
-
-    // Тесты для processCharacter
-    test('processCharacter с валидными данными', async () => {
-      jest.useFakeTimers();
-      const promise = module.processCharacter(2);
-      jest.advanceTimersByTime(10);
-      const result = await promise;
-      expect(result.name).toBe('рыцарь');
-      expect(result.health).toBe(150);
-      expect(result.isAlive).toBe(true);
-      jest.useRealTimers();
-    });
-
-    test('processCharacter возвращает все поля', async () => {
-      jest.useFakeTimers();
-      const promise = module.processCharacter(1);
-      jest.advanceTimersByTime(10);
-
-      const result = await promise;
-
-      expect(result).toHaveProperty('id', 1);
-      expect(result).toHaveProperty('name', 'друид');
-      expect(result).toHaveProperty('health', 50);
-      expect(result).toHaveProperty('status', 'жив');
-      expect(result).toHaveProperty('isAlive', true);
-      expect(result).toHaveProperty('processedAt');
-      jest.useRealTimers();
-    });
-
-    test('processCharacter catch блок полностью покрыт', async () => {
-      // Сохраняем оригинальную реализацию
-      const originalImpl = module.__testExports.fetchCharacterDataImpl;
-
-      try {
-        // Создаем mock, который сразу выбрасывает ошибку
-        const mockError = new Error('Тестовая ошибка в fetch');
-        const mockImpl = jest.fn().mockRejectedValue(mockError);
-
-        // Устанавливаем mock
-        module.__testExports.fetchCharacterDataImpl = mockImpl;
-
-        // Вызываем processCharacter и ожидаем ошибку
-        await expect(module.processCharacter(1)).rejects.toThrow('Тестовая ошибка в fetch');
-
-        // Проверяем, что console.error был вызван
-        expect(console.error).toHaveBeenCalledWith(
-          'Ошибка обработки персонажа:',
-          'Тестовая ошибка в fetch'
-        );
-
-        // Проверяем, что mock был вызван с правильным аргументом
-        expect(mockImpl).toHaveBeenCalledWith(1);
-      } finally {
-        // Восстанавливаем оригинальную функцию
-        module.__testExports.fetchCharacterDataImpl = originalImpl;
+      if (originalExports !== undefined) {
+        if (global.module) {
+          global.module.exports = originalExports;
+        }
       }
     });
 
-    test('processCharacter catch блок с ошибкой валидации', async () => {
-      jest.useFakeTimers();
+    test('should work when module is undefined', () => {
+      // Удаляем module из global
+      delete global.module;
 
-      // Сохраняем оригинальную реализацию
-      const originalImpl = module.__testExports.fetchCharacterDataImpl;
+      // Перезагружаем модуль в новом контексте
+      jest.resetModules();
+      const freshModule = require('../sortCharacters.js');
 
-      try {
-        // Мокаем fetchCharacterDataImpl, чтобы возвращать данные, которые не пройдут валидацию
-        const mockImpl = jest.fn().mockResolvedValue({ name: 'тест', health: null });
-        module.__testExports.fetchCharacterDataImpl = mockImpl;
-
-        // Вызываем processCharacter и ожидаем ошибку валидации
-        const promise = module.processCharacter(1);
-        jest.advanceTimersByTime(10);
-
-        await expect(promise).rejects.toThrow('Некорректные данные персонажа');
-
-        // Проверяем, что console.error был вызван
-        expect(console.error).toHaveBeenCalledWith(
-          'Ошибка обработки персонажа:',
-          'Некорректные данные персонажа'
-        );
-      } finally {
-        // Восстанавливаем
-        module.__testExports.fetchCharacterDataImpl = originalImpl;
-        jest.useRealTimers();
-      }
-    });
-  });
-
-  // runCharacterExamples function tests
-  describe('runCharacterExamples function', () => {
-    test('работает без ошибок', () => {
-      const results = module.runCharacterExamples();
-      expect(results.sorted).toHaveLength(4);
-      expect(results.gameHeroes).toHaveLength(4);
-      expect(results.combined).toHaveLength(8);
+      // Проверяем что функция работает
+      const result = freshModule.orderByProps({ a: 1 }, ['a']);
+      expect(result).toEqual([{ key: 'a', value: 1 }]);
     });
 
-    test('обрабатывает ошибку в sortCharacters', () => {
-      const originalDeps = module.__testExports.internalDeps;
-      try {
-        module.__testExports.internalDeps = {
-          ...originalDeps,
-          sortCharacters: jest.fn(() => {
-            throw new Error('Тестовая ошибка в sortCharacters');
-          })
-        };
-        const results = module.runCharacterExamples();
-        expect(results.sorted).toEqual([]);
-        expect(results.gameHeroes).toEqual([]);
-        expect(results.combined).toEqual([]);
-      } finally {
-        module.__testExports.internalDeps = originalDeps;
-      }
+    test('should work when module exists but module.exports is undefined', () => {
+      // Устанавливаем module без exports
+      global.module = {};
+
+      // Перезагружаем модуль
+      jest.resetModules();
+      const freshModule = require('../sortCharacters.js');
+
+      // Проверяем что функция работает
+      const result = freshModule.orderByProps({ a: 1, b: 2 }, ['b']);
+      expect(result).toEqual([
+        { key: 'b', value: 2 },
+        { key: 'a', value: 1 }
+      ]);
     });
 
-    test('обрабатывает ошибку в logCharacter внутри цикла', () => {
-      const originalDeps = module.__testExports.internalDeps;
-      try {
-        let callCount = 0;
-        module.__testExports.internalDeps = {
-          ...originalDeps,
-          logCharacter: jest.fn(() => {
-            callCount += 1;
-            if (callCount === 1) {
-              throw new Error('Тестовая ошибка в logCharacter');
-            }
-            return { name: 'тест', health: 10, status: 'жив' };
-          })
-        };
-        const results = module.runCharacterExamples();
-        expect(results.sorted).toEqual([]);
-        expect(results.gameHeroes).toEqual([]);
-        expect(results.combined).toEqual([]);
-      } finally {
-        module.__testExports.internalDeps = originalDeps;
-      }
+    test('should export correctly when module.exports exists', () => {
+      // module и module.exports уже существуют в Node.js окружении
+      // Этот тест проверяет нормальную работу
+      const result = orderByProps({ x: 10, y: 20 }, ['y']);
+      expect(result).toEqual([
+        { key: 'y', value: 20 },
+        { key: 'x', value: 10 }
+      ]);
     });
-
-    test('обрабатывает ошибку в map при создании gameHeroes', () => {
-      const originalMap = Array.prototype.map;
-      try {
-        Array.prototype.map = function mockMap () {
-          throw new Error('Тестовая ошибка в map');
-        };
-        const results = module.runCharacterExamples();
-        expect(results.sorted).toEqual([]);
-        expect(results.gameHeroes).toEqual([]);
-        expect(results.combined).toEqual([]);
-      } finally {
-        Array.prototype.map = originalMap;
-      }
-    });
-  });
-
-  // Тест для проверки __testExports getters/setters
-  test('__testExports позволяет мокировать функции', () => {
-    // Проверяем, что getter работает
-    const originalImpl = module.__testExports.fetchCharacterDataImpl;
-    expect(typeof originalImpl).toBe('function');
-
-    // Проверяем, что setter работает
-    const mockImpl = jest.fn();
-    module.__testExports.fetchCharacterDataImpl = mockImpl;
-    expect(module.__testExports.fetchCharacterDataImpl).toBe(mockImpl);
-
-    // Восстанавливаем
-    module.__testExports.fetchCharacterDataImpl = originalImpl;
-  });
-
-  // Тест для проверки internalDeps getters/setters
-  test('__testExports позволяет мокировать internalDeps', () => {
-    const originalDeps = module.__testExports.internalDeps;
-    const mockDeps = {
-      sortCharacters: jest.fn(),
-      logCharacter: jest.fn(),
-      GameCharacter: class MockCharacter {},
-      characterGenerator: jest.fn()
-    };
-
-    try {
-      module.__testExports.internalDeps = mockDeps;
-      expect(module.__testExports.internalDeps).toBe(mockDeps);
-    } finally {
-      module.__testExports.internalDeps = originalDeps;
-    }
-  });
-
-  // Дополнительные тесты для полного покрытия
-  test('characterGenerator полностью покрыт', () => {
-    const data = [{ name: 'тест1', health: 50 }, { name: 'тест2', health: 30 }];
-    const gen = module.characterGenerator(data);
-
-    const result1 = gen.next();
-    expect(result1.value.name).toBe('тест1');
-    expect(result1.done).toBe(false);
-
-    const result2 = gen.next();
-    expect(result2.value.name).toBe('тест2');
-    expect(result2.done).toBe(false);
-
-    const result3 = gen.next();
-    expect(result3.value).toBeUndefined();
-    expect(result3.done).toBe(true);
-  });
-
-  test('logCharacter с полными данными', () => {
-    const char = {
-      name: 'тест', health: 75, level: 5, extra: 'field'
-    };
-    const result = module.logCharacter(char);
-    expect(result).toEqual({ name: 'тест', health: 75, status: 'жив' });
-  });
-
-  test('sortCharacters с одинаковым здоровьем', () => {
-    const testChars = [
-      { name: 'первый', health: 50 },
-      { name: 'второй', health: 50 },
-      { name: 'третий', health: 30 }
-    ];
-    const result = module.sortCharacters(testChars);
-    expect(result[0].health).toBe(50);
-    expect(result[1].health).toBe(50);
-    expect(result[2].health).toBe(30);
-  });
-
-  // Тест для проверки, что оригинальная реализация сохранена
-  test('originalFetchCharacterDataImpl доступен', () => {
-    expect(typeof module.__testExports.originalFetchCharacterDataImpl).toBe('function');
   });
 });
